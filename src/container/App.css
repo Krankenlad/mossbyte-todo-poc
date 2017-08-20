@@ -1,0 +1,138 @@
+@import '../variables';
+
+.mosstodo__app {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.mosstodo__app-intro {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 10vw;
+    margin: 0 0 5vw;
+    font-size: 5vw;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.2);
+
+    @media (--desktop) {
+        min-height: 5vw;
+        margin: 0 0 2.5vw;
+        font-size: 3.5vw;
+    }
+}
+
+.mosstodo__app-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vw;
+    width: 90vw;
+    margin: 0 0 5vw;
+
+    @media (--desktop) {
+        height: 40vw;
+        margin: 0 0 2.5vw;
+    }
+}
+
+.mosstodo__app-hint {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    min-height: 5vw;
+    margin: 0 0 2.5vw;
+    padding: 1vw 0;
+    border-radius: 5vw;
+    font-size: 3.5vw;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgb(255, 255, 255);
+    opacity: 0;
+    transition: opacity 0.5s;
+
+    &.--on {
+        opacity: 100;
+        transition: opacity 0.5s;
+    }
+
+    span {
+        font-size: 2.5vw;
+    }
+
+    @media (--desktop) {
+        width: 50vw;
+        padding: 0.5vw 0;
+        font-size: 2.5vw;
+        margin: 0 0 2.5vw;
+
+        span {
+            font-size: 1.5vw;
+        }
+    }
+}
+
+.mosstodo__app-todo-input {
+    box-sizing: border-box;
+    width: 90vw;
+    height: 6vw;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.75);
+    font-size: 3vw;
+    text-align: center;
+
+    @media (--desktop) {
+        height: 3.5vw;
+        font-size: 2vw;
+    }
+}
+
+.mosstodo__app-todo-items-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: rgba(78, 0, 111, 0.5);
+    height: 97vw;
+    width: 90vw;
+    padding: 2.5vw 0;
+
+    @media (--desktop) {
+        box-sizing: border-box;
+        padding: 1.5vw 0;
+        max-height: 56vw;
+    }
+}
+
+.mosstodo__app-todo-items-outer-frame {
+    width: 100%;
+    margin-left: -1.5vw;
+    overflow: hidden;
+
+       .scrollbar-container.vertical {
+        background-color: rgba(255, 255, 255, 0);
+
+        .scrollbar {
+            background-color: rgb(255, 255, 255);
+        }
+    }
+}
+
+.mosstodo__app-todo-items-inner-frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 90%;
+    padding: 0 5vw;
+
+    &::first-child {
+        margin: 0;
+    }
+}
