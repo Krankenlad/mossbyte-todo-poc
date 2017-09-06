@@ -2,7 +2,7 @@
 **This project demonstrates performing API calls between MobX and mossByte**    
 The application is a pretty standard todo app allowing users to perform CRUD operations on a list of tasks. The elements that differentiate it are the usage of mossByte as a NOSQL solution and a pattern for performing async actions via MobX.    
 
-It is worth noting that I created a custom generator helpers library for this project which supports something I'm labelling as HOGs (Higher Order Generators). This feature can be seen in action within the App-logic.js code by searching for the keyword 'HOG'.    
+It is worth noting that I created a custom generator helpers library for this project which supports something I'm labelling as HOGs (Higher Order Generators) that are made possible by the generator being run, returning a promise itself.    
 
 Unit tests are currently testing that the application can successfully mount and also tests core business logic. Async, API and generator-helper tests were a bit beyond the scope for an alpha release.    
 
