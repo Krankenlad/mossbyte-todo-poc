@@ -13,7 +13,8 @@ export const deleteTodoListItemOnRemote = (baseUrl, privateKey, instructionsPayl
             return jsonData.status;
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };
 
@@ -32,7 +33,8 @@ export const updateDoneStatusForTodoItem = (baseUrl, privateKey, instructionsPay
             return jsonData.status;
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };
 
@@ -51,6 +53,7 @@ export const updateValueForTodoItem = (baseUrl, privateKey, instructionsPayload)
             return jsonData.status;
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };

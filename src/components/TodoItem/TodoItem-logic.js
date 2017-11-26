@@ -25,7 +25,7 @@ export function* updateTodoItemValueOnRemote(store) {
     try {
         yield apis.updateValueForTodoItem(constants.baseUrl, constants.privateKey, payload);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 
@@ -74,7 +74,7 @@ export function* updateDoneStatusOnRemote(store) {
     try {
         yield apis.updateDoneStatusForTodoItem(constants.baseUrl, constants.privateKey, payload);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 
@@ -107,7 +107,7 @@ export function* removeTodoItemFromRemote(itemId) {
     try {
         yield apis.deleteTodoListItemOnRemote(constants.baseUrl, constants.privateKey, payload);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 

@@ -17,7 +17,6 @@ import * as constants from '../Global-constants';
  * Cleaned up code to help with readability
  */
 export const generateGUID = () => {
-
     // Generate the lookup table
     const lookUpTable = [];
     for (let i = 0; i < 256; i += 1) {
@@ -69,16 +68,21 @@ export const generateGUID = () => {
  */
 export const generateTodoItems = (store, initialState, TodoItem) => {
     return store.todoItemList.map((item) => {
-        store[item.guid] = observable(initialState);
+        if (item.guid) {
+            store[item.guid] = observable(initialState);
 
-        return (
-            <TodoItem
-                key={item.guid}
-                value={item.value}
-                isDone={item.isDone}
-                itemId={item.guid}
-            />
-        );
+            return (
+                <TodoItem
+                    key={item.guid}
+                    value={item.value}
+                    isDone={item.isDone}
+                    itemId={item.guid}
+                />
+            );
+        }
+
+        // Item has no guid so we don't want to try render it out
+        return undefined;
     });
 };
 
@@ -102,7 +106,7 @@ export function* getMossByteDbId() {
             mossByteId = yield apis.createMossDb(constants.baseUrl, constants.publicKey, constants.privateKey);
         }
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 
@@ -110,7 +114,7 @@ export function* getRemoteTodoItemList() {
     try {
         yield apis.getMossByteTodoItemList(constants.baseUrl, constants.publicKey);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 
@@ -162,19 +166,23 @@ export const updateClientTodoItemList = (store) => {
         genHelpers.runGenerator(getMossByteDbId).then((mossByteId) => {
             store.mossByteId = mossByteId;
 
-            genHelpers.runGenerator(getRemoteTodoItemList).then((result) => {
-                const mossByteTodoItemList = packRemoteTodoItemsIntoList(result);
+            genHelpers.runGenerator(getRemoteTodoItemList)
+                .then((result) => {
+                    const mossByteTodoItemList = packRemoteTodoItemsIntoList(result);
 
-                if (mossByteTodoItemList.length > 0) {
-                    // Perform a list merge to account for cases where client connection is slow to DB
-                    const newTodoItemList = [
-                        ...mossByteTodoItemList,
-                        ...toJS(store.todoItemList),
-                    ];
+                    if (mossByteTodoItemList.length > 0) {
+                        // Perform a list merge to account for cases where client connection is slow to DB
+                        const newTodoItemList = [
+                            ...mossByteTodoItemList,
+                            ...toJS(store.todoItemList),
+                        ];
 
-                    store.todoItemList = removeDuplicateTodoItems(newTodoItemList);
-                }
-            });
+                        store.todoItemList = removeDuplicateTodoItems(newTodoItemList);
+                    }
+                })
+                .catch((error) => {
+                    throw new Error(`\nProblem with getRemoteTodoItemList:\n${error}`);
+                });
         });
     }
 };
@@ -204,7 +212,7 @@ export function* syncStoreWithRemote(store) {
     try {
         remoteTodoListPayload = yield apis.getMossByteTodoItemList(constants.baseUrl, constants.publicKey);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 
     const packagedTodoList = packRemoteTodoItemsIntoList(remoteTodoListPayload);
@@ -221,7 +229,7 @@ export function* syncStoreWithRemote(store) {
     try {
         yield apis.putTodoListOnRemote(constants.baseUrl, constants.privateKey, unpackedPayload);
     } catch (error) {
-        console.error(error);
+        throw (error);
     }
 }
 

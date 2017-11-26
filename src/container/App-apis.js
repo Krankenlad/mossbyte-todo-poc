@@ -13,7 +13,8 @@ export const checkMossByteForExistingDb = (baseUrl, publicKey) => {
             return '';
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };
 
@@ -54,7 +55,8 @@ export const createMossDb = (baseUrl, publicKey, privateKey) => {
             return '';
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };
 
@@ -73,7 +75,8 @@ export const getMossByteTodoItemList = (baseUrl, publicKey) => {
             return '';
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };
 
@@ -94,6 +97,7 @@ export const putTodoListOnRemote = (baseUrl, privateKey, newTodoList) => {
             return jsonData.status;
         })
         .catch((error) => {
-            console.error(error);
+            const errorTxt = '\nThere was a problem with this fetch request, check URL & preFlight are correct and the endpoint is available:\n';
+            throw new Error(errorTxt + error);
         });
 };

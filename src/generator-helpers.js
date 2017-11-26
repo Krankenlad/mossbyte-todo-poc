@@ -33,10 +33,13 @@
 
     =================================
 
-    Calls to runGenerator can be yielded inside another Higher Order Generator
-    this will allow composing of multiple generator functions with a single .then() to handle any output
+    Calls to runGenerator can be yielded inside a Higher Order Generator function.
+    (async version of a regular H.O.F used to coordinate pure functions)
 
-    Maybe use nested generators (HOG's) sparingly to ensure easier to read code and chances of more pure functions
+    HOGs combine multiple generator functions used to produce a final result.
+    They enhance readability by replacing nested .then() chains with a flat yield structure.
+
+    The final value derived by the last yield / return in a HOG can be accessed from a single .then() chain.
 */
 
 /**
@@ -75,13 +78,11 @@ export const isRealArray = (variable) => {
  *          - {function} paramsObj.cb - Callback function used to pass the finalYieldValue back out via a promise
  */
 export const nextCaller = (itObj, paramsObj) => {
-    /*
-    Check if there were any errors from the previous yield action
-    
-    If an error occurred as a result of the previous itObj.next() call,
-    pass it back up to be handled by a try{}catch(){} in the generator
-    */
+    // Error kill switch
     if (paramsObj.error) {
+        paramsObj.cb(paramsObj.error, paramsObj.prevYieldValue);
+
+        // Exits recursive loop by calling the iterator object's built in throw method
         itObj.throw(paramsObj.error);
     }
 
@@ -89,12 +90,12 @@ export const nextCaller = (itObj, paramsObj) => {
     const genProgress = itObj.next(paramsObj.prevYieldValue);
 
     // Check the progress, triggering the callback fn if all yields have completed
-    if (genProgress.done) {
+    if (genProgress.done && paramsObj.prevYieldValue) {
         // Trigger the callback function passing in the return value of the generator
         paramsObj.cb(paramsObj.error, paramsObj.prevYieldValue);
 
-        // Return true to exit the recursive loop as the generator has finished yielding
-        return paramsObj.prevYieldValue;
+        // Return to exit the recursive loop as the generator has finished yielding
+        return undefined;
     }
 
     /*
@@ -111,31 +112,50 @@ export const nextCaller = (itObj, paramsObj) => {
 
     // If genProgress.value is a promise, async pause execution till it resolves
     if (genProgValueIsPromise) {
-        genProgress.value.then((resolvedValue) => {
-            const newParamsObj = {
-                error: paramsObj.error,
-                prevYieldValue: resolvedValue,
-                cb: paramsObj.cb,
-            };
+        genProgress.value
+            .then((resolvedValue) => {
+                const newParamsObj = {
+                    error: paramsObj.error,
+                    prevYieldValue: resolvedValue,
+                    cb: paramsObj.cb,
+                };
 
-            nextCaller(itObj, newParamsObj);
-        });
+                nextCaller(itObj, newParamsObj);
+            })
+            .catch((error) => {
+                const newParamsObj = {
+                    error,
+                    prevYieldValue: null,
+                    cb: paramsObj.cb,
+                };
+
+                nextCaller(itObj, newParamsObj);
+            });
     } else {
         // This should almost never run, is here as a catcher incase unpromisified calls were yielded in the generator
         const newParamsObj = {
-            error: paramsObj.error,
+            error: (
+                `The generator yielded a function that did not return a promise i.e:
+    - Missing "return" before fetch()
+    - Fetch never returns anything
+    - Non-async function yielded
+    - etc.`
+            ),
             prevYieldValue: genProgress.value,
             cb: paramsObj.cb,
         };
 
         nextCaller(itObj, newParamsObj);
     }
+
+    return undefined;
 };
 
 /**
  * Takes a generator function and optional arguments object
  * @param {function} genFn - The generator function to be processed 
  * @param {object} argsObj - Only used for generators that need external params passed in i.e. callback fn etc.
+ * @return {promise} - Promisified response that can be accessed using .then and .catch enabling HOGs (Higher Order Generators)
  */
 export const runGenerator = (genFn, argsObj = null) => {
     return new Promise((resolve, reject) => {
@@ -150,8 +170,8 @@ export const runGenerator = (genFn, argsObj = null) => {
 
         const paramsObj = {
             cb: (error, result) => {
-                if (typeof result === 'undefined') {
-                    reject('The generator yielded function that did not return a promise i.e missing "return" before fetch()', genFn);
+                if (error) {
+                    reject(error);
                 } else {
                     resolve(result);
                 }

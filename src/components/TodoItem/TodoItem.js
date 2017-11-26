@@ -19,6 +19,8 @@ export default inject('store')(observer(class TodoItem extends Component {
     constructor(props) {
         super(props);
 
+        // Enables store subscribed, dynamically instantiated, child components..
+        // Redux needs an ugly / hackish workaround to achieve the same outcome
         this.todoStore = this.props.store.appStore[this.props.itemId];
 
         this.todoStore.isDone = this.props.isDone;
