@@ -20,6 +20,7 @@ export const initialState = {
     mossByteId: '',
 };
 
+
 export default inject('store')(observer(class App extends Component {
     constructor(props) {
         super(props);
@@ -39,6 +40,12 @@ export default inject('store')(observer(class App extends Component {
     handleNewTodoSubmit = (e) => {
         logic.addNewTodoItem(this.appStore, e);
         logic.updateAppHintStatus(this.appStore, this.appStore.newTodoValue);
+
+    }
+
+    handleDateChange = (e) => {
+        logic.updateDateValue(this.appStore, e.target.value);
+        document.getElementById("todoInput").focus();
     }
 
     render() {
@@ -53,12 +60,21 @@ export default inject('store')(observer(class App extends Component {
                         <span>Press {'<ENTER>'} to save your new goal !</span>
                     </p>
                     <input
+                        id="todoInput"
                         className="mosstodo__app-todo-input"
                         placeholder="What to do next ?"
                         onChange={this.handleNewTodoValueChange}
                         onKeyUpCapture={this.handleNewTodoSubmit}
                         value={this.appStore.newTodoValue}
                         autoFocus
+                    />
+                </div>
+                <div>
+                    <input
+                        id="dateID"
+                        type="date" 
+                        onChange={this.handleDateChange}
+                        onKeyUpCapture={this.handleNewTodoSubmit}
                     />
                 </div>
                 <div className="mosstodo__app-todo-items-wrapper">

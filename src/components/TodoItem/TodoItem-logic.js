@@ -143,6 +143,30 @@ export const cycleState = (store) => {
     genHelpers.runGenerator(updateStatusOnRemote, store);
 }
 
+export function* updateDateOnRemote(store) {
+    const payload = {
+        instructions: [
+            {
+                function: 'set',
+                key: `${store.itemId}.date`,
+                value: store.date,
+            },
+        ],
+    };
+
+    try {
+        yield apis.updateDoneStatusForTodoItem(constants.baseUrl, constants.privateKey, payload);
+    } catch (error) {
+        throw (error);
+    }
+}
+
+export const checkDate = (store) => {
+
+    // Toggle the status on the remote DB in the background
+    genHelpers.runGenerator(updateDateOnRemote, store);
+}
+
 /**
  * Completely removes a specific todo item from the local and remote stores
  * @param {object} appStore - The full application MobX store including sub-stores

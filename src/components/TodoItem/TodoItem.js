@@ -16,15 +16,10 @@ var StateEnum = {
     COMPLETE : 3
 }
 
-// var StateNameEnum = {
-//     INCOMPLETE : "INCOMPLETE",
-//     IN_PROGRESS : "IN IN_PROGRESS",
-//     COMPLETE : "COMPLETE"
-// }
-
 // Initial State
 export const initialState = {
     state: StateEnum.INCOMPLETE,
+    date: "2017-01-01",
     isDone: false,
     todoItemValue: '',
     itemId: '',
@@ -39,9 +34,11 @@ export default inject('store')(observer(class TodoItem extends Component {
         this.todoStore = this.props.store.appStore[this.props.itemId];
 
         this.todoStore.state = this.props.state;
+        this.todoStore.date = this.props.date;
         this.todoStore.isDone = this.props.isDone;
         this.todoStore.todoItemValue = this.props.value;
         this.todoStore.itemId = this.props.itemId;
+        console.log(this.props);
     }
 
     callUpdateDoneStatus = (e) => {
@@ -68,12 +65,19 @@ export default inject('store')(observer(class TodoItem extends Component {
         logic.triggerBluerOnEnterKey(e);
     }
 
+    callCheckDate = (e) => {
+        logic.checkDate(this.todoStore);
+    }
+
     render() {
         return (
             <div className="mosstodo__todo-item">
                 <label className={`mosstodo__todo-item-checkbox`}>
                     <input type="checkbox" value='0' onChange={this.callCycleState} />
                 </label>
+                <p>
+                {this.todoStore.date}
+                </p>
                 <input
                     type="text"
                     className={`mosstodo__todo-item-${this.todoStore.state}`}
@@ -83,6 +87,7 @@ export default inject('store')(observer(class TodoItem extends Component {
                     onKeyUpCapture={this.callTriggerBlurOnEnterKey}
                     onBlur={this.callUpdateRemoteItemValue}
                 />
+                
                 <button className="mosstodo__todo-delete-item" onClick={this.callRemoveTodoItem}>x</button>
             </div>
         );

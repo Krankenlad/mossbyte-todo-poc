@@ -77,6 +77,7 @@ export const generateTodoItems = (store, initialState, TodoItem) => {
                     value={item.value}
                     isDone={item.isDone}
                     state={item.state}
+                    date={item.date}
                     itemId={item.guid}
                 />
             );
@@ -151,6 +152,7 @@ export const packRemoteTodoItemsIntoList = (remotePayload) => {
                 guid: todoItem.guid,
                 isDone: todoItem.isDone,
                 state: todoItem.state,
+                date: todoItem.date,
                 value: todoItem.value.trim(),
             };
         });
@@ -250,9 +252,11 @@ export const updateNewTodoValue = (store, newValue) => {
  * @param {event} e - Event handler from keypress
  */
 export const addNewTodoItem = (store, e) => {
+    // console.log(store);
     if (e.key === 'Enter') {
         store.todoItemList.push({
             value: store.newTodoValue,
+            date: store.newDateValue,
             isDone: false,
             state: 1,
             guid: generateGUID(),
@@ -261,6 +265,12 @@ export const addNewTodoItem = (store, e) => {
         // Clear the input area
         updateNewTodoValue(store, '');
 
+        // document.getElementById("dateID").value='';
+
         genHelpers.runGenerator(syncStoreWithRemote, store);
     }
 };
+
+export const updateDateValue = (store, newValue) => {
+    store.newDateValue = newValue;
+}

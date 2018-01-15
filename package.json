@@ -21,7 +21,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "react-scrollbar": "^0.5.1"
+    "react-scrollbar": "^0.5.1",
+    "tiny-date-picker": "^3.1.7"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
