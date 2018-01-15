@@ -71,13 +71,9 @@ export default inject('store')(observer(class TodoItem extends Component {
     render() {
         return (
             <div className="mosstodo__todo-item">
-                <label className={`mosstodo__todo-item-checkbox${(this.todoStore.isDone && ' --done') || ''}`}>
-                    <input type="checkbox" value={this.todoStore.isDone} onChange={this.callUpdateDoneStatus} />
+                <label className={`mosstodo__todo-item-checkbox`}>
+                    <input type="checkbox" value='0' onChange={this.callCycleState} />
                 </label>
-                <button className="mosstodo__todo-cycle-complete" onClick={this.callCycleState}>x</button>
-                <p className="mosstodo__temp">
-                {this.todoStore.state}
-                </p>
                 <input
                     type="text"
                     className={`mosstodo__todo-item-${this.todoStore.state}`}
