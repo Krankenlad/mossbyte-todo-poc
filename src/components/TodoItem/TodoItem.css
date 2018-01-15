@@ -57,6 +57,29 @@
         }
     }
 
+    &.--ip {
+        transition: all 1s;
+        border-radius: 50%;
+        animation: none;
+        background: radial-gradient(rgb(0, 0, 0) 10%, rgba(100, 224, 247, 0.25));
+
+        &::before {
+            content: '✔';
+            transition: opacity 1s;
+            position: relative;
+            left: 1vw;
+            bottom: 0.3vw;
+            font-size: 4vw;
+            color: rgb(255, 255, 255);
+
+            @media (--desktop) {
+                left: 0.35vw;
+                bottom: 0.2vw;
+                font-size: 1.5vw;
+            }
+        }
+    }
+
     & input {
         display: none;
     }
@@ -121,5 +144,198 @@
         width: 2vw;
         line-height: 1vw;
         font-size: 1.5vw;
+    }
+}
+
+.mosstodo__todo-cycle-complete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 5vw;
+    margin-left: 2vw;
+    color: rgb(255, 255, 255);
+    font-size: 3.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(255, 0, 0);
+
+    @media (--desktop) {
+        width: 2vw;
+        line-height: 1vw;
+        font-size: 1.5vw;
+    }
+}
+
+.mosstodo__temp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 5vw;
+    margin-left: 2vw;
+    color: rgb(255, 255, 255);
+    font-size: 3.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+
+    @media (--desktop) {
+        width: 2vw;
+        line-height: 1vw;
+        font-size: 1.5vw;
+    }
+}
+
+.mosstodo__todo-item-new {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1vw;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 600;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+
+    &.--2 {
+        background: radial-gradient(rgba(100, 0, 100, 0.25), rgba(0, 0, 0, 0.5));
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: line-through;
+        font-style: oblique;
+        pointer-events: none;
+        filter: blur(0.2vw);
+        animation: fade-dark 1s 1;
+    }
+
+    &.--3 {
+        background: radial-gradient(rgba(100, 0, 100, 0.25), rgba(0, 0, 0, 0.5));
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: line-through;
+        font-style: oblique;
+        pointer-events: none;
+        filter: blur(0.2vw);
+        animation: fade-dark 1s 1;
+    }
+
+    &:focus {
+        background: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        animation: none;
+    }
+
+    @media (--desktop) {
+        font-size: 1.5vw;
+        border-width: 0.1vw;
+    }
+}
+
+.mosstodo__todo-item-1 {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1vw;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 600;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+
+    &.--done {
+        background: radial-gradient(rgba(100, 0, 100, 0.25), rgba(0, 0, 0, 0.5));
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: line-through;
+        font-style: oblique;
+        pointer-events: none;
+        filter: blur(0.2vw);
+        animation: fade-dark 1s 1;
+    }
+
+    &:focus {
+        background: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        animation: none;
+    }
+
+    @media (--desktop) {
+        font-size: 1.5vw;
+        border-width: 0.1vw;
+    }
+}
+
+.mosstodo__todo-item-2 {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1vw;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 600;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+
+    &.--done {
+        background: radial-gradient(rgba(100, 0, 100, 0.25), rgba(0, 0, 0, 0.5));
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: line-through;
+        font-style: oblique;
+        pointer-events: none;
+        filter: blur(0.2vw);
+        animation: fade-dark 1s 1;
+    }
+
+    &:focus {
+        background: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        animation: none;
+    }
+
+    @media (--desktop) {
+        font-size: 1.5vw;
+        border-width: 0.1vw;
+    }
+}
+
+.mosstodo__todo-item-3 {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1vw;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 600;
+    border: none;
+    /*color: rgb(255, 255, 255);*/
+    /*background-color: rgb(0, 0, 0);*/
+
+    background: radial-gradient(rgba(100, 0, 100, 0.25), rgba(0, 0, 0, 0.5));
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: line-through;
+    font-style: oblique;
+    pointer-events: none;
+    filter: blur(0.2vw);
+    animation: fade-dark 1s 1;
+
+    &:focus {
+        background: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        animation: none;
+    }
+
+    @media (--desktop) {
+        font-size: 1.5vw;
+        border-width: 0.1vw;
     }
 }

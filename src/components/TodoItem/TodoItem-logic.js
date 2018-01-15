@@ -112,6 +112,38 @@ export function* removeTodoItemFromRemote(itemId) {
 }
 
 /**
+ * Toggles the 'isDone' flag on the remote MossByte DB for the target todo list item
+ * @param {object} store - A specific TodoItem's MobX Store
+ */
+export function* updateStatusOnRemote(store) {
+    const payload = {
+        instructions: [
+            {
+                function: 'set',
+                key: `${store.itemId}.state`,
+                value: store.state,
+            },
+        ],
+    };
+
+    try {
+        yield apis.updateDoneStatusForTodoItem(constants.baseUrl, constants.privateKey, payload);
+    } catch (error) {
+        throw (error);
+    }
+}
+
+export const cycleState = (store) => {
+    store.state = store.state + 1;
+    if (store.state === 4) {
+        store.state = 1;
+    }
+
+    // Toggle the status on the remote DB in the background
+    genHelpers.runGenerator(updateStatusOnRemote, store);
+}
+
+/**
  * Completely removes a specific todo item from the local and remote stores
  * @param {object} appStore - The full application MobX store including sub-stores
  * @param {string} itemId - GUID for the todo list item being removed

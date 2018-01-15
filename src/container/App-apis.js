@@ -32,13 +32,13 @@ export const createMossDb = (baseUrl, publicKey, privateKey) => {
                 read: [
                     {
                         key: publicKey,
-                        label: 'mossbyte-mobx-todo-app',
+                        label: 'todo_example ',
                     },
                 ],
                 admin: [
                     {
                         key: privateKey,
-                        label: 'mossbyte-mobx-todo-app',
+                        label: 'todo_example ',
                     },
                 ],
             },

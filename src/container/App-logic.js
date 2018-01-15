@@ -76,6 +76,7 @@ export const generateTodoItems = (store, initialState, TodoItem) => {
                     key={item.guid}
                     value={item.value}
                     isDone={item.isDone}
+                    state={item.state}
                     itemId={item.guid}
                 />
             );
@@ -149,6 +150,7 @@ export const packRemoteTodoItemsIntoList = (remotePayload) => {
             return {
                 guid: todoItem.guid,
                 isDone: todoItem.isDone,
+                state: todoItem.state,
                 value: todoItem.value.trim(),
             };
         });
@@ -252,6 +254,7 @@ export const addNewTodoItem = (store, e) => {
         store.todoItemList.push({
             value: store.newTodoValue,
             isDone: false,
+            state: 1,
             guid: generateGUID(),
         });
 
