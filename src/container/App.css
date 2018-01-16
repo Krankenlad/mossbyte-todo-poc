@@ -136,3 +136,28 @@
         margin: 0;
     }
 }
+
+
+.popup-text {
+    visibility: hidden;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1vw;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 600;
+    border: none;
+    color: rgb(255, 0, 0);
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+
+    @media (--desktop) {
+        font-size: 1.5vw;
+        border-width: 0.1vw;
+    }
+}

@@ -254,21 +254,35 @@ export const updateNewTodoValue = (store, newValue) => {
 export const addNewTodoItem = (store, e) => {
     // console.log(store);
     if (e.key === 'Enter') {
-        store.todoItemList.push({
-            value: store.newTodoValue,
-            date: store.newDateValue,
-            isDone: false,
-            state: 1,
-            guid: generateGUID(),
-        });
+        var dateSelector = document.getElementById("dateID");
+        var popup = document.getElementById("popup");
+        console.log(popup);
+        if(dateSelector.value==="") {
+            dateSelector.focus();
+            popup.style.visibility = "visible";
+        } else {
+            store.todoItemList.push({
+                value: store.newTodoValue,
+                date: store.newDateValue,
+                isDone: false,
+                state: 1,
+                guid: generateGUID(),
+            });
 
-        // Clear the input area
-        updateNewTodoValue(store, '');
+            // Clear the input area
+            updateNewTodoValue(store, '');
 
-        genHelpers.runGenerator(syncStoreWithRemote, store);
+            genHelpers.runGenerator(syncStoreWithRemote, store);
+        }
+        
     }
 };
 
 export const updateDateValue = (store, newValue) => {
     store.newDateValue = newValue;
+    var dateSelector = document.getElementById("dateID");
+    var popup = document.getElementById("popup");
+    if (dateSelector.value !== "") {
+        popup.style.visibility = "hidden";
+    }
 }

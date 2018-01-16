@@ -95,6 +95,7 @@ export default inject('store')(observer(class TodoItem extends Component {
                     value={this.todoStore.todoItemValue}
                     onKeyUpCapture={this.callTriggerBlurOnEnterKey}
                     onBlur={this.callUpdateRemoteItemValue}
+                    required
                 />
                 
                 <button className="mosstodo__todo-delete-item" onClick={this.callRemoveTodoItem}>x</button>

@@ -38,9 +38,8 @@ export default inject('store')(observer(class App extends Component {
     }
 
     handleNewTodoSubmit = (e) => {
-        logic.addNewTodoItem(this.appStore, e);
-        logic.updateAppHintStatus(this.appStore, this.appStore.newTodoValue);
-
+            logic.addNewTodoItem(this.appStore, e);
+            logic.updateAppHintStatus(this.appStore, this.appStore.newTodoValue);
     }
 
     handleDateChange = (e) => {
@@ -72,10 +71,19 @@ export default inject('store')(observer(class App extends Component {
                 <div>
                     <input
                         id="dateID"
-                        type="date" 
+                        type="date"
                         onChange={this.handleDateChange}
                         onKeyUpCapture={this.handleNewTodoSubmit}
+                        required
                     />
+                    
+                </div>
+                <div>
+                    <span className="popup-text"
+                        id="popup"
+                    >
+                    Must select date
+                    </span>
                 </div>
                 <div className="mosstodo__app-todo-items-wrapper">
                     <ScrollArea
