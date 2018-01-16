@@ -273,3 +273,17 @@
         border-width: 0.1vw;
     }
 }
+
+.mosstodo__date-info {
+    box-sizing: border-box;
+    height: 100%;
+    width: 20%;
+    padding: 0 0vw;
+    text-align: left;
+    font-size: 3vw;
+
+    @media (--desktop) {
+        font-size: 1vw;
+    }
+
+}

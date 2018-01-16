@@ -265,8 +265,6 @@ export const addNewTodoItem = (store, e) => {
         // Clear the input area
         updateNewTodoValue(store, '');
 
-        // document.getElementById("dateID").value='';
-
         genHelpers.runGenerator(syncStoreWithRemote, store);
     }
 };

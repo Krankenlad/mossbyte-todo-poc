@@ -69,15 +69,24 @@ export default inject('store')(observer(class TodoItem extends Component {
         logic.checkDate(this.todoStore);
     }
 
+    handleDateChange = (e) => {
+        logic.updateDateValue(this.todoStore, e.target.value);
+        // logic.updateDateOnRemote(this.todoStore);
+    }
+
     render() {
         return (
             <div className="mosstodo__todo-item">
                 <label className={`mosstodo__todo-item-checkbox`}>
                     <input type="checkbox" value='0' onChange={this.callCycleState} />
                 </label>
-                <p>
-                {this.todoStore.date}
-                </p>
+                <input
+                    type="date"
+                    id="dateChange"
+                    className={'mosstodo__date-info'}
+                    value={this.todoStore.date}
+                    onChange={this.handleDateChange}
+                />
                 <input
                     type="text"
                     className={`mosstodo__todo-item-${this.todoStore.state}`}

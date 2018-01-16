@@ -190,3 +190,11 @@ export const removeTodoItem = (appStore, itemId) => {
         genHelpers.runGenerator(removeTodoItemFromRemote, itemId);
     }
 };
+
+export const updateDateValue = (store, newValue) => {
+    console.log(store);
+    store.date = newValue;
+
+    // Toggle the status on the remote DB in the background
+    genHelpers.runGenerator(updateDateOnRemote, store);
+}
